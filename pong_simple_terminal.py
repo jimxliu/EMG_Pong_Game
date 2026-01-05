@@ -1,5 +1,4 @@
 import pygame
-import threading
 import random
 from neurofly import UDPClientListener, DEFAULT_UDP_PORT
 

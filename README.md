@@ -25,7 +25,7 @@ EMG signals from one arm are acquired by the OpenBCI Cyton board and streamed vi
 - A simple Pong game is implemented with pygame, where the game logic parses the streamed data and converts it into upward and downward paddle movements.
 
 #### Run instructions
-1. Start OpenBCI GUI, connect to the Cyton board, and configure the Networking widget to stream EMGJoystick data via UDP on port 12345.
+1. Start OpenBCI GUI, connect to the Cyton board, and configure the Networking widget to stream EMGJoystick data via UDP on port `12345`.
 2. Run the `pong_simple_terminal.py` script to start the game.
 3. Use arm muscle contractions to control the paddle:
    - Flexing the biceps (increasing EMG signal on N1P) moves the paddle up.
@@ -36,7 +36,7 @@ EMG signals from one arm are acquired by the OpenBCI Cyton board and streamed vi
 This project represents my first exploration into using EMG signals for game control. My goal is to leverage EMG and EEG technologies to enable people who may not be able to use traditional joysticks to enjoy interactive gaming experiences.
 
 
-## EMG-Controlled Pong Game Design
+## Game Design Details
 
 ### Architecture Overview
 
