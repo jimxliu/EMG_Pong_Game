@@ -4,19 +4,19 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     EMG Data Source                              │
-│              (OpenBCI GUI / NeuroFly App)                        │
-│                                                                   │
-│  Sends UDP packets:                                              │
-│  { "type": "emgJoystick", "data": [x, y] }                     │
+│                     EMG Data Source                             │
+│              (OpenBCI GUI / NeuroFly App)                       │
+│                                                                 │
+│  Sends UDP packets:                                             │
+│  { "type": "emgJoystick", "data": [x, y] }                      │
 └──────────────────────────────┬──────────────────────────────────┘
                                │ UDP Port 12345
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   neurofly.py                                    │
-│              UDPClientListener Class                             │
-│                                                                   │
+│                   neurofly.py                                   │
+│              UDPClientListener Class                            │
+│                                                                 │
 │  • Listens on 0.0.0.0:12345                                     │
 │  • Parses JSON packets in background thread                     │
 │  • Calls registered callback with packet data                   │
@@ -24,61 +24,61 @@
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│           pong_simple_terminal.py - Main Game Loop               │
+│           pong_simple_terminal.py - Main Game Loop              │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ Global State                                             │   │
 │  │  • cmd: paddle direction (-1/+1/0)                       │   │
 │  │  • score: current score                                  │   │
 │  │  • EMG_THRESHOLD: 0.1                                    │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ emg_joystick_callback()                                  │   │
-│  │  Input: UDP packet { "data": [x, y] }                   │   │
+│  │  Input: UDP packet { "data": [x, y] }                    │   │
 │  │  • Extract data[1] (Y value)                             │   │
 │  │  • If y > 0.1: cmd = -1 (move up)                        │   │
 │  │  • If y < -0.1: cmd = +1 (move down)                     │   │
 │  │  • Else: cmd = 0 (no movement)                           │   │
 │  │  Output: Update global cmd variable                      │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ countdown_sequence()                                     │   │
 │  │  Display: 3 → 2 → 1 → GO!                                │   │
 │  │  Duration: 4 seconds total                               │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ Main Game Loop (60 FPS)                                  │   │
 │  ├──────────────────────────────────────────────────────────┤   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │  Timer Check:                                            │   │
-│  │    elapsed_time = (current - start) / 1000              │   │
+│  │    elapsed_time = (current - start) / 1000               │   │
 │  │    remaining_time = 60 - elapsed_time                    │   │
 │  │    if remaining_time ≤ 0: exit loop                      │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │  Paddle Logic:                                           │   │
 │  │    if cmd ≠ 0:                                           │   │
 │  │      paddle.y += cmd * STEP (5 pixels/frame)             │   │
 │  │      clamp paddle within screen bounds                   │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │  Ball Physics:                                           │   │
 │  │    ball.x += vx                                          │   │
 │  │    ball.y += vy                                          │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │    if ball hits top/bottom wall:                         │   │
 │  │      vy *= -1 (bounce)                                   │   │
 │  │      vy += random(-0.01, 0.01) (slight variation)        │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │    if ball exits left/right:                             │   │
 │  │      vx *= -1                                            │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │    if ball collides with paddle AND vx < 0:              │   │
 │  │      vx *= -1 (bounce)                                   │   │
 │  │      score += 1                                          │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  │  Rendering (Pygame):                                     │   │
 │  │    • Clear screen (black)                                │   │
 │  │    • Draw paddle (white rectangle)                       │   │
@@ -86,21 +86,21 @@
 │  │    • Render score text (top center)                      │   │
 │  │    • Render timer text (top right)                       │   │
 │  │    • Flip display                                        │   │
-│  │                                                            │   │
+│  │                                                          │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ game_over_screen()                                       │   │
 │  │  Display: "GAME OVER" + "Final Score: {score}"           │   │
 │  │  Wait for window close                                   │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │ Cleanup (finally block)                                  │   │
 │  │  • pygame.quit()                                         │   │
 │  │  • listener.stop()                                       │   │
 │  └──────────────────────────────────────────────────────────┘   │
-│                                                                   │
+│                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -142,8 +142,8 @@ EMG Signal (OpenBCI)
        │
        ▼
 ┌──────────────────┐
-│  COUNTDOWN (3-2-1)│
-│  Duration: 3 sec │
+│ COUNTDOWN (3-2-1)│
+│ Duration: 3 sec  │
 └──────┬───────────┘
        │
        ▼
@@ -191,7 +191,7 @@ EMG Signal (OpenBCI)
 Main Thread (Pygame)          Background Thread (UDP Listener)
 ─────────────────────         ─────────────────────────────────
 │                             │
-├─ pygame.init()             │
+├─ pygame.init()              │
 ├─ Start listener ────────────┼──→ UDPClientListener.start()
 │                             │       │
 │ Main Game Loop              │       ├─ Bind socket to :12345
@@ -204,9 +204,9 @@ Main Thread (Pygame)          Background Thread (UDP Listener)
 ├─ Game Over screen           │ (continues in background)
 │                             │
 ├─ listener.stop() ──────────→├─ Break loop, close socket
-├─ pygame.quit()             │
+├─ pygame.quit()              │
 │                             │
-└─ Exit                      └─ Exit
+└─ Exit                       └─ Exit
 ```
 
 ## Ball Collision Detection
