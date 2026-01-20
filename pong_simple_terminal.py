@@ -24,7 +24,27 @@ def emg_joystick_callback(packet, addr):
                 cmd = 0
 
 def countdown_sequence(screen, W, H, large_font, listener):
-    """Display countdown sequence before game starts."""
+    """Wait for Space key press, then display countdown sequence before game starts."""
+    # Wait for Space key to start countdown
+    waiting = True
+    while waiting:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                listener.stop()
+                return False  # Signal to exit
+            if e.type == pygame.KEYDOWN and e.key == pygame.K_SPACE:
+                # Space pressed: start countdown
+                waiting = False
+                break
+        
+        screen.fill((0, 0, 0))
+        start_text = large_font.render("Press SPACE to Start", True, (255, 255, 255))
+        screen.blit(start_text, (W // 2 - start_text.get_width() // 2, H // 2 - start_text.get_height() // 2))
+        pygame.display.flip()
+        pygame.time.delay(100)  # Small delay to prevent excessive CPU usage
+    
+    # Countdown sequence
     countdown = 3
     countdown_clock = pygame.time.Clock()
     while countdown > 0:
