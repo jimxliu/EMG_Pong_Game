@@ -217,7 +217,7 @@ EMG Signal (OpenBCI)
 | `DEFAULT_UDP_PORT` | 12345 | UDP listener port |
 | `EMG_THRESHOLD` | 0.1 | Minimum EMG magnitude to trigger movement |
 | `STEP` | 5 | Paddle pixels per frame |
-| `game_duration` | 60 | Game length in seconds |
+| `GAME_DURATION` | 40 | Game length in seconds |
 | `ball_radius` | 8 | Ball display radius in pixels |
 | `FPS` | 60 | Game loop frame rate |
 | `Screen W × H` | 800 × 500 | Display resolution |

@@ -4,6 +4,7 @@ from neurofly import UDPClientListener, DEFAULT_UDP_PORT
 
 # Shared paddle command from UDP EMG input: -1 (up), +1 (down), 0 (none)
 cmd = 0
+GAME_DURATION = 40  # seconds
 EMG_UP_THRESHOLD = 0.15  # Threshold to trigger movement
 EMG_DOWN_THRESHOLD = 0.05  # Threshold to trigger movement
 
@@ -120,17 +121,16 @@ def main():
     if not countdown_sequence(screen, W, H, large_font, listener):
         return
 
-    # Game timer (60 seconds)
-    game_duration = 60  # seconds
+    # Game timer
     start_time = pygame.time.get_ticks()  # Get start time in milliseconds
 
     try:
         running = True
         exited_by_quit = False
         while running:
-            # Check if game time has exceeded 60 seconds
+            # Check if game time has exceeded duration
             elapsed_time = (pygame.time.get_ticks() - start_time) / 1000  # Convert to seconds
-            remaining_time = max(0, game_duration - elapsed_time)
+            remaining_time = max(0, GAME_DURATION - elapsed_time)
             
             if remaining_time <= 0:
                 running = False
