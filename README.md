@@ -20,6 +20,20 @@ EMG signals from one arm are acquired by the OpenBCI Cyton board and streamed vi
 - Use only the N1P and N2P channels—disabling all others and turning off SRB—to control joystick up (Y+) and down (Y−) movements. The BIAS electrode is used for grounding and noise reduction.
 - After experimenting with different arm muscle groups, I found that placing N1P on the biceps, N2P on the triceps, and BIAS near the elbow on the same arm provides the most reliable setup. This configuration produces sufficiently strong EMG signals while minimizing noise and excessive sensitivity, although the resulting movement can feel slightly awkward.
 
+#### Hardware and Software Configuration
+
+The following images document the OpenBCI GUI configuration used for this project:
+
+![Hardware Settings](media/hardware_settings.png)
+*OpenBCI Cyton board settings with 2-channel EMG configuration*
+
+![EMG Settings](media/emg_settings.png)
+*EMG signal processing and filtering parameters*
+
+![Time Series](media/time_series.png)
+*Real-time EMG data visualization from N1P (biceps) and N2P (triceps) channels*
+
+
 #### Game setup
 - A Python interface is created to listen to the UDP data stream produced by EMGJoystick.
 - A simple Pong game is implemented with pygame, where the game logic parses the streamed data and converts it into upward and downward paddle movements.
@@ -31,6 +45,12 @@ EMG signals from one arm are acquired by the OpenBCI Cyton board and streamed vi
    - Flexing the biceps (increasing EMG signal on N1P) moves the paddle up.
    - Relaxing the biceps and contracting the triceps (increasing EMG signal on N2P) moves the paddle down.
 4. The game lasts for 60 seconds, and the objective is to keep the ball in play as long as possible by hitting it with the paddle.
+
+### Game Demo
+<video controls>
+       <source src="media/game_recording.mov" type="video/mp4">
+       Your browser does not support the video tag.
+</video>
 
 ## Why is this important?
 This project represents my first exploration into using EMG signals for game control. My goal is to leverage EMG and EEG technologies to enable people who may not be able to use traditional joysticks to enjoy interactive gaming experiences.
