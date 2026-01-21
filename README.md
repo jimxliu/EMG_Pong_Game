@@ -6,6 +6,9 @@ I am making a Pong game that can be controlled by moving an arm up and down.
 ### High-level design
 EMG signals from one arm are acquired by the OpenBCI Cyton board and streamed via UDP to a game listener script that controls a simple Pong game.
 
+### Game Demo
+https://github.com/user-attachments/assets/9d557944-ed08-4622-be74-9eec3532f2f8
+
 ## How are OpenBCI tools being applied?
 
 ### Materials and Coding
@@ -46,11 +49,7 @@ The following images document the OpenBCI GUI configuration used for this projec
    - Relaxing the biceps and contracting the triceps (increasing EMG signal on N2P) moves the paddle down.
 4. The game lasts for 60 seconds, and the objective is to keep the ball in play as long as possible by hitting it with the paddle.
 
-### Game Demo
-<video controls>
-       <source src="media/game_recording.mov" type="video/mp4">
-       Your browser does not support the video tag.
-</video>
+
 
 ## Why is this important?
 This project represents my first exploration into using EMG signals for game control. My goal is to leverage EMG and EEG technologies to enable people who may not be able to use traditional joysticks to enjoy interactive gaming experiences.
