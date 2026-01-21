@@ -4,21 +4,22 @@ from neurofly import UDPClientListener, DEFAULT_UDP_PORT
 
 # Shared paddle command from UDP EMG input: -1 (up), +1 (down), 0 (none)
 cmd = 0
-EMG_THRESHOLD = 0.1  # Threshold to trigger movement
+EMG_UP_THRESHOLD = 0.15  # Threshold to trigger movement
+EMG_DOWN_THRESHOLD = 0.05  # Threshold to trigger movement
 
 def emg_joystick_callback(packet, addr):
     """UDP callback: extract EMG joystick X and map to paddle direction."""
     global cmd
     if packet.get("type") == "emgJoystick" and isinstance(packet.get("data"), list):
         data = packet["data"]
-        print(f"EMG Joystick Data: {data} from {addr}")
+        # print(f"EMG Joystick Data: {data} from {addr}")
         if len(data) >= 1:
             emg_y = data[1]
-            print(f"EMG Joystick Y: {emg_y} from {addr}")
+            # print(f"EMG Joystick Y: {emg_y} from {addr}")
             # If y > threshold, move up (cmd = -1); if y < -threshold, move down (cmd = +1)
-            if emg_y > EMG_THRESHOLD:
+            if emg_y > EMG_DOWN_THRESHOLD:
                 cmd = -1
-            elif emg_y < -EMG_THRESHOLD:
+            elif emg_y < -EMG_DOWN_THRESHOLD:
                 cmd = +1
             else:
                 cmd = 0
